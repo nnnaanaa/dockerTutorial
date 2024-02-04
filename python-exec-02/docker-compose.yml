@@ -1,0 +1,26 @@
+version: '3'
+services:
+  flask-app:
+    image: python:3.8
+    container_name: flask-app
+    volumes:
+      - ./server.py:/usr/src/app/server.py
+      - ./requirements.txt:/usr/src/app/requirements.txt
+    working_dir: /usr/src/app
+    ports:
+      - "5000:5000"
+    command: >
+      sh -c "pip install -r requirements.txt && python server.py"
+
+  ubuntu-container:
+    image: ubuntu:20.04
+    container_name: ubuntu-server
+    networks:
+      - my-network
+    volumes:
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
+    command: bash -c "apt-get update && apt-get install -y curl iputils-ping && tail -f /dev/null"
+
+networks:
+  my-network:

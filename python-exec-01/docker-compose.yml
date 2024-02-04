@@ -1,0 +1,22 @@
+version: '3'
+services:
+  python-app1:
+    image: python:3.8  # 使用するPythonのバージョンに応じて変更可能
+    volumes:
+      - ./app.py:/app/app.py  # ローカルのapp.pyをコンテナ内の/app/app.pyにマウント
+    working_dir: /app
+    command: python app.py  # 実行するコマンド
+
+  # python-app2:
+  #   image: python:3.8  # 使用するPythonのバージョンに応じて変更可能
+  #   volumes:
+  #     - ./app.py:/app/app.py  # ローカルのapp.pyをコンテナ内の/app/app.pyにマウント
+  #   working_dir: /app
+  #   command: python app.py  # 実行するコマンド
+
+  ubuntu-container:
+    image: ubuntu:20.04
+    volumes:
+      - ./:/usr/local/bin  # ローカルのカレントディレクトリをコンテナ内の/usr/local/binにマウント
+    working_dir: /usr/local/bin  # コンテナ内の作業ディレクトリを指定
+    command: tail -f /dev/null  # コンテナを終了しないようにするためのコマンド
